@@ -1,0 +1,45 @@
+{
+  "name": "lost-orbit",
+  "version": "0.1.0",
+  "description": "Framework-agnostic 404 Lost Orbit scene: voxel factory, scan beam, fighter departure, and grid runners.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./layout": "./src/layout/index.ts",
+    "./flight": "./src/flight/index.ts",
+    "./craft": "./src/craft/index.ts",
+    "./effects": "./src/effects/index.ts",
+    "./transit": "./src/transit/index.ts",
+    "./tuner": "./src/tuner/index.ts",
+    "./runners": "./src/runners/index.ts",
+    "./scene": "./src/scene/index.ts",
+    "./style.css": "./src/style/lost-orbit.css"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit",
+    "preview": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "three": "^0.180.0"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "0.180.0",
+    "jsdom": "26.1.0",
+    "typescript": "5.9.3",
+    "vite": "7.1.7",
+    "vitest": "4.1.11"
+  }
+}

@@ -1,0 +1,303 @@
+:root {
+  --lp-canvas: #0a0a09;
+  --lp-panel: rgba(17, 17, 16, 0.82);
+  --lp-elevated: #151514;
+  --lp-ink: #e8e6df;
+  --lp-mute: #9a9890;
+  --lp-faint: #66645e;
+  --lp-line: rgba(232, 230, 223, 0.12);
+  --lp-line-strong: rgba(232, 230, 223, 0.18);
+  --lp-accent: #c8a96b;
+  --lp-accent-ink: #0a0a09;
+  --lp-sheen: #e8e6df;
+  --font-mono: "SF Mono", ui-monospace, monospace;
+  --font-sans: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", sans-serif;
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--lp-canvas);
+  color: var(--lp-ink);
+  font-family: var(--font-sans);
+}
+
+body.lost-orbit-grid::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--lp-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--lp-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at top, #000 30%, transparent 75%);
+  opacity: 0.45;
+}
+
+.absent-factory-frame {
+  min-height: 0;
+  width: 100%;
+}
+
+.absent-factory {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.absent-camera-hint {
+  position: absolute;
+  left: 50%;
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  z-index: 2;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--lp-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--lp-canvas) 76%, transparent);
+  color: var(--lp-accent);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 0.5rem);
+  transition: opacity 400ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  backdrop-filter: blur(6px);
+}
+
+.absent-camera-hint.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.absent-speed-gauge {
+  position: absolute;
+  left: 50%;
+  bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 2.35rem);
+  z-index: 2;
+  width: 9.5rem;
+  height: 3px;
+  transform: translateX(-50%);
+  background: color-mix(in srgb, var(--lp-accent) 22%, transparent);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.absent-speed-gauge.is-visible {
+  opacity: 1;
+}
+
+.absent-portal-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  color: var(--lp-accent);
+  font-size: 1.1rem;
+  line-height: 1;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--lp-accent) 80%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  will-change: transform;
+}
+
+.absent-portal-marker.is-visible {
+  opacity: 0.9;
+  animation: absent-marker-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes absent-marker-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.absent-speed-gauge > i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--lp-accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--lp-accent) 70%, transparent);
+  transition: width 90ms linear;
+}
+
+.grid-runners {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.absent-factory canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.portal-tuner {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 40;
+  width: min(340px, calc(100vw - 24px));
+  max-height: min(78dvh, 640px);
+  overflow: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--lp-line-strong);
+  background: var(--lp-panel);
+  color: var(--lp-ink);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.portal-tuner.is-folded {
+  overflow: hidden;
+}
+
+.portal-tuner.is-folded .portal-tuner-body {
+  display: none;
+}
+
+.portal-tuner-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.portal-tuner-head span {
+  color: var(--lp-mute);
+  flex: 1;
+}
+
+.portal-tuner-head button,
+.portal-tuner-actions button {
+  border: 1px solid var(--lp-line);
+  background: var(--lp-elevated);
+  color: var(--lp-ink);
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.portal-tuner-live {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  margin: 10px 0 8px;
+}
+
+.portal-tuner-live div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.portal-tuner-live-wide {
+  grid-column: 1 / -1;
+}
+
+.portal-tuner-live dt {
+  color: var(--lp-mute);
+}
+
+.portal-tuner-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 86px;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.portal-tuner-row input[type='range'] {
+  width: 100%;
+}
+
+.portal-tuner-flags {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0;
+  color: var(--lp-mute);
+}
+
+.portal-tuner-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.portal-tuner-code {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--lp-accent);
+}
+
+.lost-orbit-shell {
+  position: relative;
+  min-height: 100dvh;
+}
+
+.lost-orbit-copy {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+  padding: 28px 32px;
+  max-width: 28rem;
+}
+
+.lost-orbit-copy p,
+.lost-orbit-copy h1 {
+  margin: 0 0 8px;
+}
+
+.lost-orbit-kicker {
+  color: var(--lp-accent);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lost-orbit-title {
+  font-size: 28px;
+  letter-spacing: 0.06em;
+}
+
+.lost-orbit-body {
+  color: var(--lp-mute);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.lost-orbit-nav {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 16px 24px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.lost-orbit-nav a {
+  color: var(--lp-accent);
+  text-decoration: none;
+}
+
+.lost-orbit-nav a:hover {
+  color: var(--lp-sheen);
+}
